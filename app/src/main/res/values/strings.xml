@@ -3,4 +3,12 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="createApp">Create Appointment</string>
+    <string name="viewEditApp">View/Edit Appointment</string>
+    <string name="deleteApp">Delete Appointment</string>
+    <string name="moveApp">Move Appointment</string>
+    <string name="searchApp">Search Appointment</string>
+    <string name="translateApp">Translate Appointment</string>
+
 </resources>
