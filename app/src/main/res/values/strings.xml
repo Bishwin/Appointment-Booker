@@ -11,4 +11,9 @@
     <string name="searchApp">Search Appointment</string>
     <string name="translateApp">Translate Appointment</string>
 
+    <string name="appointmentTitle">Title:</string>
+    <string name="appointmentTime">Time:</string>
+    <string name="appointmentDescription">Description:</string>
+    <string name="saveApp">Save Appointment</string>
+
 </resources>

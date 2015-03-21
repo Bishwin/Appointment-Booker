@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/dateTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/appointmentTitle"
+        android:id="@+id/appointmentTitle"
+        android:layout_below="@id/dateTitle"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/editTitle"
+        android:inputType="text"
+        android:layout_below="@id/appointmentTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/appointmentTime"
+        android:id="@+id/timeTitle"
+        android:layout_below="@+id/editTitle"
+        />
+
+    <TextView
+        android:id="@+id/editTime"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/timeTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/appointmentDescription"
+        android:id="@+id/descriptionTitle"
+        android:layout_below="@id/editTime"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="11"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/editDescription"
+        android:layout_below="@id/descriptionTitle"
+        />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/saveApp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/editDescription"
+        android:id="@+id/button" />
+
+</RelativeLayout>

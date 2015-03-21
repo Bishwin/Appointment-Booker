@@ -1,37 +1,40 @@
 package com.w1441879.appointmentbooker;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CalendarView;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 
-public class HomeScreen extends Activity {
+public class HomeScreen extends Activity implements OnClickListener {
 
     CalendarView calendar;
-
-
+    View createBtn, editBtn, searchBtn, deleteBtn, moveBtn, translateBtn;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        calendar = (CalendarView)findViewById(R.id.calendarView);
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
 
-            @Override
-            public void onSelectedDayChange(CalendarView view,
-                                            int year, int month, int dayOfMonth) {
-                //Toast.makeText(getApplicationContext(),
-                       // dayOfMonth +"/"+month+"/"+ year,Toast.LENGTH_LONG).show();
-                       //
-                       }});
+        //Buttons
+        createBtn=findViewById(R.id.createBtn);
+        editBtn=findViewById(R.id.viewEditBtn);
+        searchBtn=findViewById(R.id.searchBtn);
+        deleteBtn=findViewById(R.id.deleteBtn);
+        moveBtn=findViewById(R.id.moveBtn);
+        translateBtn=findViewById(R.id.translateBtn);
+        //Listeners
+        createBtn.setOnClickListener(this);
 
+        InitCal();
     }
 
     @Override
@@ -55,6 +58,35 @@ public class HomeScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void InitCal(){
+        calendar = (CalendarView)findViewById(R.id.calendarView);
+        long today = calendar.getDate();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        date = (sdf.format(today));
 
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view,
+                                            int year, int month, int dayOfMonth) {
+                month++;
+                //StringBuilder sb = new StringBuilder().append(String.format("%02d",dayOfMonth)).append(String.format("%02d",month)).append(year);
+                date = dayOfMonth + "/" + (String.format("%02d",month)) + "/" + year;
+                //date = sb.toString();
+
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.createBtn:
+                Intent i = new Intent(HomeScreen.this, CreateAppointment.class);
+                i.putExtra("date", date);
+                startActivity(i);
+                break;
+        }
+    }
 }
