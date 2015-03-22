@@ -2,6 +2,7 @@ package com.w1441879.appointmentbooker;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,8 @@ public class HomeScreen extends Activity implements OnClickListener {
         //Listeners
         createBtn.setOnClickListener(this);
         editBtn.setOnClickListener(this);
+        deleteBtn.setOnClickListener(this);
+
 
         InitCal();
     }
@@ -87,6 +90,9 @@ public class HomeScreen extends Activity implements OnClickListener {
                 Intent editEvent = new Intent(HomeScreen.this, ViewScreen.class);
                 editEvent.putExtra("date", date);
                 startActivity(editEvent);
+                break;
+            case R.id.deleteBtn:
+
                 break;
         }
     }

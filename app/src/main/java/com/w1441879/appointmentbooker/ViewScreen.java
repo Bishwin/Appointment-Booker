@@ -8,9 +8,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import static android.provider.BaseColumns._ID;
 import static com.w1441879.appointmentbooker.Constants.C_DATE;
 import static com.w1441879.appointmentbooker.Constants.C_TABLE_NAME;

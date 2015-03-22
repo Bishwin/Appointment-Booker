@@ -72,7 +72,6 @@ public class CreateScreen extends Activity{
         db.insertOrThrow(C_TABLE_NAME, null, values);
     }
 
-
     public void setTime(){
         timeField = (TextView) findViewById(R.id.editTime);
 
@@ -101,10 +100,5 @@ public class CreateScreen extends Activity{
             }
         });
     }
-
-
-
-
-
 
 }
