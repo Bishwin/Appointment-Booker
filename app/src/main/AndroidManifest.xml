@@ -22,6 +22,9 @@
         <activity
             android:name=".ViewScreen">
         </activity>
+        <activity
+            android:name=".DeleteScreen">
+        </activity>
     </application>
 
 </manifest>

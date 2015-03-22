@@ -1,7 +1,10 @@
 package com.w1441879.appointmentbooker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,20 +12,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import static com.w1441879.appointmentbooker.Constants.C_TABLE_NAME;
+import static com.w1441879.appointmentbooker.Constants.WHERE;
 
 public class HomeScreen extends Activity implements OnClickListener {
 
     CalendarView calendar;
     View createBtn, editBtn, searchBtn, deleteBtn, moveBtn, translateBtn;
     String date;
-
+    AppointmentData appointData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        appointData = new AppointmentData(this);
+
         //Buttons
         createBtn=findViewById(R.id.createBtn);
         editBtn=findViewById(R.id.viewEditBtn);
@@ -82,18 +91,47 @@ public class HomeScreen extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.createBtn:
-                Intent createEvent = new Intent(HomeScreen.this, CreateScreen.class);
-                createEvent.putExtra("date", date);
-                startActivity(createEvent);
+                    Intent createEvent = new Intent(HomeScreen.this, CreateScreen.class);
+                    createEvent.putExtra("date", date);
+                    startActivity(createEvent);
                 break;
             case R.id.viewEditBtn:
-                Intent editEvent = new Intent(HomeScreen.this, ViewScreen.class);
-                editEvent.putExtra("date", date);
-                startActivity(editEvent);
+                    Intent editEvent = new Intent(HomeScreen.this, ViewScreen.class);
+                    editEvent.putExtra("date", date);
+                    startActivity(editEvent);
                 break;
             case R.id.deleteBtn:
-
+                    deleteDialog();
                 break;
         }
     }
+
+    private void deleteDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("DELETE APPOINTMENTS");
+        builder.setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SQLiteDatabase db = appointData.getReadableDatabase();
+                    String[] selectionArgs = {date};
+                    db.delete(C_TABLE_NAME, WHERE , selectionArgs);
+                Toast.makeText(getApplicationContext(), "ALL DATES DELETED", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Delete Specific", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent deleteEvent = new Intent(HomeScreen.this, DeleteScreen.class);
+                deleteEvent.putExtra("date", date);
+                startActivity(deleteEvent);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+    }
+
+
+
 }

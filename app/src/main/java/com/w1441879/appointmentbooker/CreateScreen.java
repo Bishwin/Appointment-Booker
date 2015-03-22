@@ -2,8 +2,11 @@ package com.w1441879.appointmentbooker;
 
 import android.app.Activity;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import static com.w1441879.appointmentbooker.Constants.C_DATE;
-import static com.w1441879.appointmentbooker.Constants.C_TABLE_NAME;
-import static com.w1441879.appointmentbooker.Constants.C_TIME;
-import static com.w1441879.appointmentbooker.Constants.C_TITLE;
-
-
+import static com.w1441879.appointmentbooker.Constants.*;
 import java.util.Calendar;
 
 public class CreateScreen extends Activity{
@@ -26,7 +24,8 @@ public class CreateScreen extends Activity{
     TextView timeField,dateField;
     Button save;
     AppointmentData appointData;
-    String time, date;
+    String time, date, title;
+    EditText titleInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,37 +38,48 @@ public class CreateScreen extends Activity{
         date= getIntent().getStringExtra("date");
         dateField.setText(date);
 
+        titleInput = (EditText) findViewById(R.id.editTitle);
+
         setTime();
 
         save = (Button) findViewById(R.id.saveBtn);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    addAppointment();
+                boolean successful = false;
+                title = titleInput.getText().toString();
+
+                if(title.matches("")){
+                    showDialog(title);
+                }else try {
+                        addAppointment();
+                        successful=true;
+                    } catch (SQLiteConstraintException e) {
+                        showDialog(title);
+                    }
+                if(successful) {
                     Toast.makeText(getApplicationContext(), "EVENT CREATED", Toast.LENGTH_SHORT).show();
-                } finally{
-                    appointData.close();
                     finish();
                 }
             }
         });
     }
 
-    private void addAppointment() {
-        /* Insert a new record into the Events data
-        source. You would do something similar
-        for delete and update. */
-        EditText titleInput = (EditText) findViewById(R.id.editTitle);
-        String title = titleInput.getText().toString();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        appointData.close();
+    }
 
+    private void addAppointment() {
         SQLiteDatabase db = appointData.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-            values.put(C_TIME, time);
             values.put(C_TITLE, title);
+            values.put(C_TIME, time);
             values.put(C_DATE, date);
-        db.insertOrThrow(C_TABLE_NAME, null, values);
+
+            db.insertOrThrow(C_TABLE_NAME, null, values);
     }
 
     public void setTime(){
@@ -99,6 +109,29 @@ public class CreateScreen extends Activity{
                 timePicker.show();
             }
         });
+    }
+
+
+    private void showDialog(String title){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error");
+        if(title.matches("")){
+            builder.setMessage("Please enter a Title");
+        } else {
+            builder.setMessage("Appointment " + title + " already exists, please enter a different title");
+        }
+        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+
     }
 
 }
