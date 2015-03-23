@@ -147,7 +147,7 @@ public class Translator extends Activity {
         toSpinner.setAdapter(adapter);
         // Automatically select two spinner items
         fromSpinner.setSelection(8); // English (en)
-        toSpinner.setSelection(25); // Spanish (es)
+        toSpinner.setSelection(22); // Klingon (tlh)
     }
 
     private void setListeners() {
