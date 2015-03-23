@@ -44,6 +44,7 @@ public class HomeScreen extends Activity implements OnClickListener {
         editBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
         moveBtn.setOnClickListener(this);
+        translateBtn.setOnClickListener(this);
 
 
         InitCal();
@@ -108,6 +109,12 @@ public class HomeScreen extends Activity implements OnClickListener {
                 Intent moveEvent = new Intent(HomeScreen.this, MoveScreen.class);
                 moveEvent.putExtra("date", date);
                 startActivity(moveEvent);
+                break;
+            case R.id.translateBtn:
+                Intent translateEvent = new Intent(HomeScreen.this, Translator.class);
+                //moveEvent.putExtra("date", date);
+                startActivity(translateEvent);
+                break;
         }
     }
 

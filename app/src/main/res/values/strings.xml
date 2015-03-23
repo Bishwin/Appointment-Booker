@@ -21,5 +21,6 @@
     <string name="inputTextHint">input text</string>
     <string name="to_label">To: </string>
     <string name="translateBUTTON">Translate</string>
+    <string name="translation_error">(Translationerror)</string>
 
 </resources>
