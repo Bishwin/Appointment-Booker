@@ -25,6 +25,14 @@
         <activity
             android:name=".DeleteScreen">
         </activity>
+        <activity
+            android:name=".EditDialog"
+            android:label="@string/updateEvent"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
+        </activity>
+        <activity
+            android:name=".MoveScreen">
+        </activity>
     </application>
 
 </manifest>

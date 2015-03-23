@@ -16,4 +16,6 @@
     <string name="appointmentDescription">Description:</string>
     <string name="saveApp">Save Appointment</string>
 
+    <string name="updateEvent">Amend Details</string>
+
 </resources>

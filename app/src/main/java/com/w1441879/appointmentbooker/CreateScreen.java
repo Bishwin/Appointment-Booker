@@ -24,23 +24,23 @@ public class CreateScreen extends Activity{
     TextView timeField,dateField;
     Button save;
     AppointmentData appointData;
-    String time, date, title;
-    EditText titleInput;
+    String time, date, title, descrip;
+    EditText titleInput,descripInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_appointment);
 
+        setTime();
+
         appointData = new AppointmentData(this);
 
+        titleInput = (EditText) findViewById(R.id.createTitle);
+        descripInput = (EditText) findViewById(R.id.createDescrip);
         dateField = (TextView)findViewById(R.id.dateTitle);
         date= getIntent().getStringExtra("date");
         dateField.setText(date);
-
-        titleInput = (EditText) findViewById(R.id.editTitle);
-
-        setTime();
 
         save = (Button) findViewById(R.id.saveBtn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +48,7 @@ public class CreateScreen extends Activity{
             public void onClick(View v) {
                 boolean successful = false;
                 title = titleInput.getText().toString();
+                descrip = descripInput.getText().toString();
 
                 if(title.matches("")){
                     showDialog(title);
@@ -78,12 +79,13 @@ public class CreateScreen extends Activity{
             values.put(C_TITLE, title);
             values.put(C_TIME, time);
             values.put(C_DATE, date);
+            values.put(C_DESCRIP, descrip);
 
             db.insertOrThrow(C_TABLE_NAME, null, values);
     }
 
     public void setTime(){
-        timeField = (TextView) findViewById(R.id.editTime);
+        timeField = (TextView) findViewById(R.id.createTime);
 
         Calendar cal = Calendar.getInstance();
         final int hour = cal.get(Calendar.HOUR_OF_DAY);
@@ -104,13 +106,12 @@ public class CreateScreen extends Activity{
                         timeField.setText(time);
                     }
 
-                }, hour, minute, true);//Yes 24 hour time
+                }, hour, minute, true);
                 timePicker.setTitle("Select Time");
                 timePicker.show();
             }
         });
     }
-
 
     private void showDialog(String title){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -118,20 +119,9 @@ public class CreateScreen extends Activity{
         if(title.matches("")){
             builder.setMessage("Please enter a Title");
         } else {
-            builder.setMessage("Appointment " + title + " already exists, please enter a different title");
+            builder.setMessage("Appointment '" + title + "' already exists, please enter a different title");
         }
-        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
         AlertDialog alert = builder.create();
         alert.show();
-
-
-
     }
-
 }

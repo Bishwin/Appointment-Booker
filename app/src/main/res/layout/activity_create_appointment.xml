@@ -24,12 +24,12 @@
         android:layout_below="@id/dateTitle"/>
 
     <EditText
+        android:id="@+id/createTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
-        android:id="@+id/editTitle"
         android:inputType="text"
         android:layout_below="@id/appointmentTitle"/>
 
@@ -42,11 +42,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/appointmentTime"
         android:id="@+id/timeTitle"
-        android:layout_below="@+id/editTitle"
+        android:layout_below="@+id/createTitle"
         />
 
     <TextView
-        android:id="@+id/editTime"
+        android:id="@+id/createTime"
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,18 +64,18 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/appointmentDescription"
         android:id="@+id/descriptionTitle"
-        android:layout_below="@id/editTime"/>
+        android:layout_below="@id/createTime"/>
 
     <EditText
+        android:id="@+id/createDescrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="11"
+        android:lines="5"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/editDescription"
         android:layout_below="@id/descriptionTitle"
         />
 
@@ -85,7 +85,7 @@
         android:text="@string/saveApp"
         android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/editDescription"
+        android:layout_alignStart="@+id/createDescrip"
         android:id="@+id/saveBtn" />
 
 </RelativeLayout>

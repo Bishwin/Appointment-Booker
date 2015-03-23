@@ -1,6 +1,7 @@
 package com.w1441879.appointmentbooker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class ViewScreen extends Activity {
     ListView list;
     SimpleCursorAdapter mAdapter;
     TextView dateTitle;
-    //String date;
+    String date;
     SQLiteDatabase db;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,11 @@ public class ViewScreen extends Activity {
         setContentView(R.layout.activity_view_appointment);
 
         dateTitle = (TextView)findViewById(R.id.dateTitle);
-        String date= getIntent().getStringExtra("date");
+        date= getIntent().getStringExtra("date");
         dateTitle.setText(date);
 
         appointData = new AppointmentData(this);
-            addToListView(date);
+            addToListView();
             registerListClicker();
 
     }
@@ -43,7 +44,13 @@ public class ViewScreen extends Activity {
         appointData.close();
     }
 
-    private void addToListView(String date){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addToListView();
+    }
+
+    private void addToListView(){
         String[] selectionArgs = {date};
         db = appointData.getReadableDatabase();
 
@@ -68,14 +75,27 @@ public class ViewScreen extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String WHERE = _ID + "=" + id;
-                Cursor cursor = db.query(C_TABLE_NAME, ALL_KEYS,WHERE, null, null, null, null);
-                if(cursor.moveToFirst()){
-                    String title = cursor.getString(COL_TITLE);
+                    String WHERE = _ID + "=" + id;
+                    Cursor cursor = db.query(C_TABLE_NAME, ALL_KEYS, WHERE, null, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        long DBID = cursor.getLong(0);
+                        String title = cursor.getString(COL_TITLE);
+                        String time = cursor.getString(COL_TIME);
+                        String descrip = cursor.getString(COL_DESCRIP);
 
-                    System.out.println(title);
+                        Intent updateEvent = new Intent(ViewScreen.this, EditDialog.class);
+                        updateEvent.putExtra("ID", DBID);
+                        updateEvent.putExtra("date", date);
+                        updateEvent.putExtra("title", title);
+                        updateEvent.putExtra("time", time);
+                        updateEvent.putExtra("description", descrip);
+                        startActivity(updateEvent);
+
+                        System.out.println(title);
+
+                    cursor.close();
                 }
-                cursor.close();
+
             }
         });
     }
