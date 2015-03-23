@@ -41,6 +41,10 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".TranslateScreen"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".Translator"
             android:screenOrientation="portrait">
         </activity>

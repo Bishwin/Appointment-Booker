@@ -9,6 +9,8 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Calendar;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.json.JSONException;
@@ -19,6 +21,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -33,6 +40,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import static android.provider.BaseColumns._ID;
+import static com.w1441879.appointmentbooker.Constants.C_DATE;
+import static com.w1441879.appointmentbooker.Constants.C_DESCRIP;
+import static com.w1441879.appointmentbooker.Constants.C_TABLE_NAME;
+import static com.w1441879.appointmentbooker.Constants.C_TIME;
+import static com.w1441879.appointmentbooker.Constants.C_TITLE;
 
 
 public class Translator extends Activity {
@@ -50,6 +66,12 @@ public class Translator extends Activity {
     // needed to make translate requests to Microsoft
     private String accessToken;
 
+    String descrip, newDescrip;
+    long ID;
+    EditText eventDescrip;
+    Button saveInput, cancelInput;
+    AppointmentData appointData;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +81,50 @@ public class Translator extends Activity {
         setListeners();
         // get the access token from Microsoft
         new GetAccessTokenTask().execute();
+
+        //set description
+        appointData = new AppointmentData(this);
+        getData();
     }
 
+    private void getData(){
+        ID = getIntent().getLongExtra("ID", 0);
+        descrip = getIntent().getStringExtra("description");
+        eventDescrip = (EditText)findViewById(R.id.input_text);
+        eventDescrip.setText(descrip);
+
+        saveInput=(Button)findViewById(R.id.save_button);
+        cancelInput=(Button)findViewById(R.id.cancel_button);
+
+        saveInput.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transText = (TextView) findViewById(R.id.translated_text);
+                newDescrip = transText.getText().toString();
+                updateData();
+                Toast.makeText(getApplicationContext(), "DESCRIPTION TRANSLATED", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        cancelInput.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void updateData(){
+        SQLiteDatabase db = appointData.getWritableDatabase();
+
+        final String selection = _ID + "=?";
+        final String[] selectionArgs = { String.valueOf(ID) };
+
+        ContentValues values = new ContentValues();
+            values.put(C_DESCRIP, newDescrip);
+        db.update(C_TABLE_NAME,values,selection,selectionArgs);
+    }
+    //TRANSLATOR CODE
     private void findViews() {
         fromSpinner = (Spinner) findViewById(R.id.from_language);
         toSpinner = (Spinner) findViewById(R.id.to_language);

@@ -111,8 +111,8 @@ public class HomeScreen extends Activity implements OnClickListener {
                 startActivity(moveEvent);
                 break;
             case R.id.translateBtn:
-                Intent translateEvent = new Intent(HomeScreen.this, Translator.class);
-                //moveEvent.putExtra("date", date);
+                Intent translateEvent = new Intent(HomeScreen.this, TranslateScreen.class);
+                translateEvent.putExtra("date", date);
                 startActivity(translateEvent);
                 break;
         }

@@ -22,5 +22,8 @@
     <string name="to_label">To: </string>
     <string name="translateBUTTON">Translate</string>
     <string name="translation_error">(Translationerror)</string>
+    <string name="translateTitle">Translate Description</string>
+    <string name="saveTrans">Save</string>
+    <string name="cancelTrans">Cancel</string>
 
 </resources>

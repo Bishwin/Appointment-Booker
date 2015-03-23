@@ -1,36 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-        <TableRow>
-            <TextView
-                android:text="@string/from_label"/>
-            <Spinner
-                android:id="@+id/from_language"/>
-        </TableRow>
-        <EditText
-            android:id="@+id/input_text"
-            android:hint="@string/inputTextHint"
-            android:padding="10dp"/>
-        <TableRow>
-            <TextView
-                android:text="@string/to_label"/>
-            <Spinner
-                android:id="@+id/to_language"/>
-        </TableRow>
         <TextView
-            android:id="@+id/translated_text"
-            android:padding="10dp"/>
-        <Button
-            android:id="@+id/translate_button"
+            android:id="@+id/from_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/from_label"
+            android:layout_margin="10dp"/>
+        <Spinner
+            android:id="@+id/from_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/from_text" />
+        <EditText
+            android:id="@+id/input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inputTextHint"
+            android:lines="4"
+            android:inputType="textMultiLine"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/from_language"/>
+        <TextView
+            android:id="@+id/to_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to_label"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/input_text"/>
+        <Spinner
+            android:id="@+id/to_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/input_text"
+            android:layout_alignEnd="@+id/cancel_button"
+            android:layout_alignStart="@+id/from_language" />
+        <TextView
+            android:id="@+id/translated_text"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/to_language"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_above="@+id/translate_button" />
+        <Button
+            android:id="@+id/translate_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/translateBUTTON"
-            android:layout_gravity="center"/>
-        </TableLayout>
-</ScrollView>
+            android:layout_above="@+id/save_button"
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dp"/>
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/saveTrans"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignTop="@+id/cancel_button"
+            android:layout_alignStart="@+id/translate_button" />
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancelTrans"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/translated_text" />
+</RelativeLayout>
