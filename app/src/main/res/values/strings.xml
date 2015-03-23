@@ -17,5 +17,9 @@
     <string name="saveApp">Save Appointment</string>
 
     <string name="updateEvent">Amend Details</string>
+    <string name="from_label">From: </string>
+    <string name="inputTextHint">input text</string>
+    <string name="to_label">To: </string>
+    <string name="translateBUTTON">Translate</string>
 
 </resources>
